@@ -38,9 +38,9 @@ def QR(path):
     qrsig = requests.utils.dict_from_cookiejar(r.cookies).get('qrsig')
     with open(pt,'wb') as f:
         f.write(r.content)
-    f=open(pt,'rb')   
-    sendDingDing(str(base64.b64encode(f.read())))
-    f.close()
+    #f=open(pt,'rb')   
+    #sendDingDing(str(base64.b64encode(f.read())))
+    #f.close()
     im = Image.open(pt)
     im = im.resize((350,350))
     
@@ -114,8 +114,8 @@ def qun(cookies,bk,num,qq,path,names):
             f.write(res.content)
         
         print('downlaod success: '+pt)
-        print('start publish weather warning....')
-        publishWeatherWarning(publish_url,pt)
+        #print('start publish weather warning....')
+        #publishWeatherWarning(publish_url,pt)
         names = fl['name']
         return [names,cookies,bk]
     except Exception as e:
@@ -147,7 +147,7 @@ def publishWeatherWarning(url,file):
         
 def sendDingDing(text):
     timestamp = str(round(time.time() * 1000))
-    secret = 'SEC27226f2335b822c1ea2b420a5949b94132928c211073de520d85aef18bae1648'
+    secret = 'SEC27226f2335b'
     secret_enc = secret.encode('utf-8')
     string_to_sign = '{}\n{}'.format(timestamp, secret)
     string_to_sign_enc = string_to_sign.encode('utf-8')
@@ -159,7 +159,7 @@ def sendDingDing(text):
                'sign':sign
                }
     
-    webhook = 'https://oapi.dingtalk.com/robot/send?access_token=c0bdf96e6ebdadb9db76b824c75dac2817e46eac7eabed8f3d517627eedc7889&sign='+sign+'&timestamp='+timestamp
+    webhook = 'https://oapi.dingtalk.com/robot/send?access_token=cc7eabed8f3d517627eedc7889&sign='+sign+'&timestamp='+timestamp
     data = {
      "msgtype": "markdown",
      "markdown": {
@@ -179,7 +179,7 @@ def sendDingDing(text):
     x = requests.post(url=webhook, data=json.dumps(data), headers=headers)
     print(x.text)
 
-publish_url = 'http://192.168.50.106:8906/api/weather/warning/publishGeoTiffRAR'
+publish_url = 'http://localhost:host/api/'
 
 if __name__ == '__main__':
     #执行时间
@@ -192,9 +192,9 @@ if __name__ == '__main__':
     else:
         os.makedirs(path)
     #群组编号
-    gid='219713955' #input('输入群号：743378134，219713955 ')
+    gid='2197195' #input('输入群号： ')
     #qq号
-    qq='743721254' #input('输入QQ号：1398741644，743721254 ')
+    qq='74372254' #input('输入QQ号： ')
 
     #qrsig = QR(path)
     #token = ptqrtoken(qrsig)
